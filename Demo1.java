@@ -57,8 +57,11 @@ Welcome to Basketball, What would you like to do:
                 addPlayer(name, pos, team);
             }
         }
-
-        System.out.println(players);
+        if(response1 == 2){
+            System.out.println(players);
+        }
+        if(response1 == 3){
+            //TODO: add calculated data option menu
+        }
     }
-
 }
