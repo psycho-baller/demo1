@@ -5,10 +5,7 @@
 // Instructor: Johnathan Hudson
 package project;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -47,7 +44,30 @@ public class Demo1 {
         players.put(fam_name, player);
     }
 
-    //TODO: Add rest of functions
+    public static void best_3pt(){
+        int sum = 0;
+        for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
+            sum += (parseInt(id.getValue().get("missed 3pt") + parseInt(id.getValue().get("made 3pt"))));
+        }
+        //get the average number of 3pt attempts of all the players
+        float avg_3pt_attempts = (float) sum/(players.size());
+        
+        float best_percentage = 0;
+        String best_3pt_player = "";
+        int best_attempts = 0;
+        for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
+            int player_attempts = parseInt(id.getValue().get("missed 3pt") + parseInt(id.getValue().get("made 3pt")));
+            int tot_attempts = parseInt(id.getValue().get("missed 3pt") + parseInt(id.getValue().get("made 3pt")));
+            float percentage = (float) (parseInt(players.get(id.getKey()).get("made 3pt"))/tot_attempts) * 100;
+            if (player_attempts > avg_3pt_attempts && percentage > best_percentage){
+                best_percentage = percentage;
+                best_3pt_player = id.getKey();
+                best_attempts = tot_attempts;
+            }
+        }
+        System.out.println("The best 3pt shooter according to our algorithm is " + best_3pt_player + " with a " + best_percentage + "% made out of " + best_attempts + " attempts");
+    }
+
     public static void main(String[] args) {
         boolean loop = true;
         while (loop) {
@@ -93,8 +113,8 @@ public class Demo1 {
                     String fam_name = capitalize(input.nextLine());
 
                     boolean found = false;
-                    for (Map.Entry<String, HashMap<String, String>> entry : players.entrySet()) {
-                        if (fam_name.equals(entry.getKey())) {
+                    for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
+                        if (fam_name.equals(id.getKey())) {
                             found = true;
                             break;
                         }
