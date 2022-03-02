@@ -1,3 +1,9 @@
+// Names: Maximilian Kaczmarek, Rami Maalouf
+// UCID: 30151219, 30151862
+// Date: March 01, 2022
+// Tutorials: 01, 02
+// Instructor: Johnathan Hudson
+
 package project;
 
 import java.util.ArrayList;
@@ -98,8 +104,8 @@ public class Demo1 {
                     addPlayer(name, famName, pos, team);
                 }
 
+
                 //adding to the arrayList
-                //how are we planning on adding to the arraylist
                 if (response2 == 2) {
                     System.out.println("Which player do you want to add to?");
                     String name = input.nextLine();
