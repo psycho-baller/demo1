@@ -52,7 +52,7 @@ public class Demo1 {
         boolean loop = true;
         while (loop) {
             System.out.print("""
-                    Welcome to Basketball, What would you like to do:
+                    Welcome to Basketball player statistics, What would you like to do:
                     1: Add data
                     2: View stored data
                     3: view calculated data
