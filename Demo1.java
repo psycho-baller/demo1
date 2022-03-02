@@ -3,30 +3,26 @@
 // Date: March 01, 2022
 // Tutorials: 01, 02
 // Instructor: Johnathan Hudson
-
 package project;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class Demo1 {
 
-    //static ArrayList<HashMap<String, String>> players = new ArrayList<HashMap<String, String>>();
 
     //just a hashmap where the key is a string and the value is another hashmap
     //first hashmap = players(name, player (hashmap(string,string))
     static HashMap<String, HashMap<String, String>> players = new HashMap<String, HashMap<String, String>>();
 
-
-
-
-    public static void addPlayer(String name, String famName, String pos, String team) {
+    public static void addPlayer(String name, String fam_name, String pos, String team) {
         HashMap<String, String> player = new HashMap<String, String>();
         player.put("Name", name);
-        player.put("fam name", famName);
+        player.put("fam name", fam_name);
         player.put("position", pos);
         player.put("team", team);
         player.put("missed ft", "0");
@@ -41,7 +37,7 @@ public class Demo1 {
         player.put("blocks", "0");
 
         //adding it to the overall hashmap which is called player, we are going to access using name
-        players.put(famName, player);
+        players.put(fam_name, player);
     }
 
     //TODO: Add rest of functions
@@ -75,7 +71,7 @@ public class Demo1 {
                     System.out.println("What is the player's first name?");
                     String name = input.nextLine();
                     System.out.println("What is the player's last name?");
-                    String famName = input.nextLine();
+                    String fam_name = input.nextLine();
                     System.out.println("What is the player's position?");
                     String pos = input.nextLine();
                     System.out.println("What team does the player play at?");
@@ -101,48 +97,54 @@ public class Demo1 {
 //                    System.out.println("What are the players blocks");
 //                    String blocks = input.nextLine();
 
-                    addPlayer(name, famName, pos, team);
+                    addPlayer(name, fam_name, pos, team);
                 }
 
-
                 //adding to the arrayList
+                //how are we planning on adding to the arraylist
                 if (response2 == 2) {
-                    System.out.println("Which player do you want to add to?");
-                    String name = input.nextLine();
-                    System.out.println("How many free throws were missed?");
-                    String missed_ft = input.nextLine();
-                    System.out.println("How many free throws were made?");
-                    String made_ft = input.nextLine();
-                    System.out.println("How many missed 2 pointers?");
-                    String missed_2pt = input.nextLine();
-                    System.out.println("How many made 2 pointers?");
-                    String made_2pt = input.nextLine();
-                    System.out.println("How many missed 3 pointers?");
-                    String missed_3pt = input.nextLine();
-                    System.out.println("How many made 3 pointers?");
-                    String made_3pt = input.nextLine();
-                    System.out.println("How many assists?");
-                    String assists = input.nextLine();
-                    System.out.println("How many rebounds?");
-                    String rebounds = input.nextLine();
-                    System.out.println("How many steals?");
-                    String steals = input.nextLine();
-                    System.out.println("How many blocks?");
-                    String blocks = input.nextLine();
+                    System.out.println("Which player do you want to add to (family name)?");
+                    String fam_name = input.nextLine();
+
+                    for (Map.Entry<String, HashMap<String, String>> entry : players.entrySet()) {
+                        if (fam_name.equals(entry.getKey())) {
+                            System.out.println("How many free throws were missed?");
+                            String missed_ft = input.nextLine();
+                            System.out.println("How many free throws were made?");
+                            String made_ft = input.nextLine();
+                            System.out.println("How many missed 2 pointers?");
+                            String missed_2pt = input.nextLine();
+                            System.out.println("How many made 2 pointers?");
+                            String made_2pt = input.nextLine();
+                            System.out.println("How many missed 3 pointers?");
+                            String missed_3pt = input.nextLine();
+                            System.out.println("How many made 3 pointers?");
+                            String made_3pt = input.nextLine();
+                            System.out.println("How many assists?");
+                            String assists = input.nextLine();
+                            System.out.println("How many rebounds?");
+                            String rebounds = input.nextLine();
+                            System.out.println("How many steals?");
+                            String steals = input.nextLine();
+                            System.out.println("How many blocks?");
+                            String blocks = input.nextLine();
 
 
-                    //players are overall hashmap(list of players) the .get is accessing whatever name is in the player list, the .put is putting in the whole data base
-                    players.get(name).put("missed ft", missed_ft);
-                    players.get(name).put("made ft", made_ft);
-                    players.get(name).put("missed 2pt", missed_2pt);
-                    players.get(name).put("made 2pt", made_2pt);
-                    players.get(name).put("missed 3pt", missed_3pt);
-                    players.get(name).put("made 3pt", made_3pt);
-                    players.get(name).put("assists", assists);
-                    players.get(name).put("rebounds", rebounds);
-                    players.get(name).put("steals", steals);
-                    players.get(name).put("blocks", blocks);
-
+                            //players are overall hashmap(list of players) the .get is accessing whatever name is in the player list, the .put is putting in the whole database
+                            players.get(fam_name).put("missed ft", missed_ft);
+                            players.get(fam_name).put("made ft", made_ft);
+                            players.get(fam_name).put("missed 2pt", missed_2pt);
+                            players.get(fam_name).put("made 2pt", made_2pt);
+                            players.get(fam_name).put("missed 3pt", missed_3pt);
+                            players.get(fam_name).put("made 3pt", made_3pt);
+                            players.get(fam_name).put("assists", assists);
+                            players.get(fam_name).put("rebounds", rebounds);
+                            players.get(fam_name).put("steals", steals);
+                            players.get(fam_name).put("blocks", blocks);
+                        }
+                    }
+                    System.err.println("Could not find player");
+                    System.exit(0);
                 }
                 if (response2 == 3){
                     continue;
