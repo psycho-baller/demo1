@@ -14,6 +14,13 @@ import static java.lang.Integer.parseInt;
 
 public class Demo1 {
 
+    public static String capitalize(String str) {
+        if(str == null || str.isEmpty()) {
+            return str;
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 
     //just a hashmap where the key is a string and the value is another hashmap
     //first hashmap = players(name, player (hashmap(string,string))
@@ -21,10 +28,10 @@ public class Demo1 {
 
     public static void addPlayer(String name, String fam_name, String pos, String team) {
         HashMap<String, String> player = new HashMap<String, String>();
-        player.put("Name", name);
-        player.put("fam name", fam_name);
-        player.put("position", pos);
-        player.put("team", team);
+        player.put("Name", capitalize(name));
+        player.put("fam name", capitalize(fam_name));
+        player.put("position", pos.toUpperCase());
+        player.put("team", capitalize(team));
         player.put("missed ft", "0");
         player.put("made ft", "0");
         player.put("missed 2pt", "0");
@@ -69,82 +76,66 @@ public class Demo1 {
                 int response2 = parseInt(input.nextLine());
                 if (response2 == 1) {
                     System.out.println("What is the player's first name?");
-                    String name = input.nextLine();
+                    String name = capitalize(input.nextLine());
                     System.out.println("What is the player's last name?");
-                    String fam_name = input.nextLine();
+                    String fam_name = capitalize(input.nextLine());
                     System.out.println("What is the player's position?");
-                    String pos = input.nextLine();
+                    String pos = input.nextLine().toUpperCase();
                     System.out.println("What team does the player play at?");
-                    String team = input.nextLine();
-//                    System.out.println("What are the players missed free throws?");
-//                    String missed_ft = input.nextLine();
-//                    System.out.println("What are the players made free throws?");
-//                    String made_ft = input.nextLine();
-//                    System.out.println("What are the players missed 2 pointers?");
-//                    String missed_2pt = input.nextLine();
-//                    System.out.println("What are the players made 2 pointers?");
-//                    String made_2pt = input.nextLine();
-//                    System.out.println("What are the players missed 3 pointers?");
-//                    String missed_3pt = input.nextLine();
-//                    System.out.println("What are the players made 3 pointers?");
-//                    String made_3pt = input.nextLine();
-//                    System.out.println("What are the players assists?");
-//                    String assists = input.nextLine();
-//                    System.out.println("What are the players rebounds?");
-//                    String rebounds = input.nextLine();
-//                    System.out.println("What are the players steals?");
-//                    String steals = input.nextLine();
-//                    System.out.println("What are the players blocks");
-//                    String blocks = input.nextLine();
+                    String team = capitalize(input.nextLine());
 
                     addPlayer(name, fam_name, pos, team);
                 }
-
                 //adding to the arrayList
                 //how are we planning on adding to the arraylist
                 if (response2 == 2) {
                     System.out.println("Which player do you want to add to (family name)?");
-                    String fam_name = input.nextLine();
+                    String fam_name = capitalize(input.nextLine());
 
+                    boolean found = false;
                     for (Map.Entry<String, HashMap<String, String>> entry : players.entrySet()) {
                         if (fam_name.equals(entry.getKey())) {
-                            System.out.println("How many free throws were missed?");
-                            String missed_ft = input.nextLine();
-                            System.out.println("How many free throws were made?");
-                            String made_ft = input.nextLine();
-                            System.out.println("How many missed 2 pointers?");
-                            String missed_2pt = input.nextLine();
-                            System.out.println("How many made 2 pointers?");
-                            String made_2pt = input.nextLine();
-                            System.out.println("How many missed 3 pointers?");
-                            String missed_3pt = input.nextLine();
-                            System.out.println("How many made 3 pointers?");
-                            String made_3pt = input.nextLine();
-                            System.out.println("How many assists?");
-                            String assists = input.nextLine();
-                            System.out.println("How many rebounds?");
-                            String rebounds = input.nextLine();
-                            System.out.println("How many steals?");
-                            String steals = input.nextLine();
-                            System.out.println("How many blocks?");
-                            String blocks = input.nextLine();
-
-
-                            //players are overall hashmap(list of players) the .get is accessing whatever name is in the player list, the .put is putting in the whole database
-                            players.get(fam_name).put("missed ft", missed_ft);
-                            players.get(fam_name).put("made ft", made_ft);
-                            players.get(fam_name).put("missed 2pt", missed_2pt);
-                            players.get(fam_name).put("made 2pt", made_2pt);
-                            players.get(fam_name).put("missed 3pt", missed_3pt);
-                            players.get(fam_name).put("made 3pt", made_3pt);
-                            players.get(fam_name).put("assists", assists);
-                            players.get(fam_name).put("rebounds", rebounds);
-                            players.get(fam_name).put("steals", steals);
-                            players.get(fam_name).put("blocks", blocks);
+                            found = true;
+                            break;
                         }
                     }
-                    System.err.println("Could not find player");
-                    System.exit(0);
+                    if (found){//TODO: get error if int is negative
+                        System.out.println("How many free throws were missed?");
+                        int missed_ft = parseInt(input.nextLine());
+                        System.out.println("How many free throws were made?");
+                        int made_ft = parseInt(input.nextLine());
+                        System.out.println("How many missed 2 pointers?");
+                        int missed_2pt = parseInt(input.nextLine());
+                        System.out.println("How many made 2 pointers?");
+                        int made_2pt = parseInt(input.nextLine());
+                        System.out.println("How many missed 3 pointers?");
+                        int missed_3pt = parseInt(input.nextLine());
+                        System.out.println("How many made 3 pointers?");
+                        int made_3pt = parseInt(input.nextLine());
+                        System.out.println("How many assists?");
+                        int assists = parseInt(input.nextLine());
+                        System.out.println("How many rebounds?");
+                        int rebounds = parseInt(input.nextLine());
+                        System.out.println("How many steals?");
+                        int steals = parseInt(input.nextLine());
+                        System.out.println("How many blocks?");
+                        int blocks = parseInt(input.nextLine());
+
+
+                        //players are overall hashmap(list of players) the .get is accessing whatever name is in the player list, the .put is putting in the whole database
+                        players.get(fam_name).put("missed ft", String.valueOf(missed_ft + parseInt(players.get(fam_name).get("missed ft"))));
+                        players.get(fam_name).put("made ft", String.valueOf(made_ft + parseInt(players.get(fam_name).get("made ft"))));
+                        players.get(fam_name).put("missed 2pt", String.valueOf(missed_2pt + parseInt(players.get(fam_name).get("missed 2pt"))));
+                        players.get(fam_name).put("made 2pt", String.valueOf(made_2pt + parseInt(players.get(fam_name).get("made 2pt"))));
+                        players.get(fam_name).put("missed 3pt", String.valueOf(missed_3pt + parseInt(players.get(fam_name).get("missed 3pt"))));
+                        players.get(fam_name).put("made 3pt", String.valueOf(made_3pt + parseInt(players.get(fam_name).get("made 3pt"))));
+                        players.get(fam_name).put("assists", String.valueOf(assists + parseInt(players.get(fam_name).get("assists"))));
+                        players.get(fam_name).put("rebounds", String.valueOf(rebounds + parseInt(players.get(fam_name).get("rebounds"))));
+                        players.get(fam_name).put("steals", String.valueOf(steals + parseInt(players.get(fam_name).get("steals"))));
+                        players.get(fam_name).put("blocks", String.valueOf(blocks + parseInt(players.get(fam_name).get("blocks"))));
+                    }else {
+                        System.err.println("Could not find player");
+                    }
                 }
                 if (response2 == 3){
                     continue;
