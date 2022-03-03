@@ -10,8 +10,9 @@ package project;
 import java.util.*;
 import static java.lang.Integer.parseInt;
 
-public class Demo1 {
+public class DemoGitHub {
 
+    //capitalizing the first letter of the last name for each player
     public static String capitalize(String str) {
         if (str == null || str.isEmpty()) {
             return str;
@@ -47,7 +48,7 @@ public class Demo1 {
         players.put(fam_name, player);
     }
 
-
+    //user input selects cutoff
     public static void above_certain(int points_cutoff, int assists_cutoff, int rebounds_cutoff) {
         int points;
         int assists;
@@ -105,6 +106,7 @@ public class Demo1 {
         }
     }
 
+    //main function
     public static void main(String[] args) throws Exception {
         boolean loop = true;
         while (loop) {
@@ -325,8 +327,8 @@ public class Demo1 {
                     System.out.println("Best Team" + best_team);
                     System.out.println("Best Team Score" + best_team_score);
                 }
-                    //**Best defenders**(largest number of steals and blocks(summed up))
-                    //sub menu is response 2 main menu is response is 1
+                //**Best defenders**(largest number of steals and blocks(summed up))
+                //sub menu is response 2 main menu is response is 1
                 if (response2 == 2) {
                     List<String> names = new ArrayList<>(players.keySet());
                     //set to zero because it gives first player
@@ -357,7 +359,6 @@ public class Demo1 {
                     System.out.println("Defender score: " + best_defence);
 
                 } else if (response2 == 3) {
-
                     above_certain(25, 5, 5);
                 } else if (response2 == 4) {
                     System.out.println(get_best_worst("missed 3pt", "made 3pt", true));
