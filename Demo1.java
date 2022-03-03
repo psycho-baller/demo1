@@ -8,6 +8,7 @@
 package project;
 
 import java.util.*;
+
 import static java.lang.Integer.parseInt;
 
 public class Demo1 {
@@ -15,7 +16,7 @@ public class Demo1 {
     /**
      * @param str
      * it will take the str from the parameter and
-     * @return the parameter with it's first being capitalized
+     * @return the parameter 'str' with it's first being capitalized
      */
     public static String capitalize(String str) {
         if (str == null || str.isEmpty()) {
@@ -24,7 +25,7 @@ public class Demo1 {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    //just a hashmap where the key is a string and the value is another hashmap
+    //just a hashmap where the key is a string (fam name) and the value is another hashmap
     //first hashmap = players(name, player (hashmap(string,string))
     static HashMap<String, HashMap<String, String>> players = new HashMap<>();
 
@@ -34,6 +35,7 @@ public class Demo1 {
         player.put("fam name", capitalize(fam_name));
         player.put("position", pos.toUpperCase());
         player.put("team", capitalize(team));
+        //we initialize the rest of the key-value pairs to 0
         player.put("games played", "0");
         player.put("missed ft", "0");
         player.put("made ft", "0");
@@ -45,13 +47,29 @@ public class Demo1 {
         player.put("rebounds", "0");
         player.put("steals", "0");
         player.put("blocks", "0");
-        //the 0 does not matter can be anything, getting changed anyway
 
-        //adding it to the overall hashmap which is called player, we are going to access using fam_name
+        //adding it to the overall hashmap which is called player, we are going to access each player using the key "fam name"
         players.put(fam_name, player);
     }
 
-    public static void add_data() throws InterruptedException {
+    public static void add_data(String fam_name, int games_played, int missed_ft, int made_ft, int missed_2pt, int made_2pt, int missed_3pt, int made_3pt, int assists, int rebounds, int steals, int blocks){
+
+        //parsing turns String into an integer
+        //players are overall hashmap(list of players) the .get is accessing whatever name is in the player list, the .put is putting in the whole database
+        players.get(fam_name).put("games played", String.valueOf(games_played + parseInt(players.get(fam_name).get("games played"))));
+        players.get(fam_name).put("missed ft", String.valueOf(missed_ft + parseInt(players.get(fam_name).get("missed ft"))));
+        players.get(fam_name).put("made ft", String.valueOf(made_ft + parseInt(players.get(fam_name).get("made ft"))));
+        players.get(fam_name).put("missed 2pt", String.valueOf(missed_2pt + parseInt(players.get(fam_name).get("missed 2pt"))));
+        players.get(fam_name).put("made 2pt", String.valueOf(made_2pt + parseInt(players.get(fam_name).get("made 2pt"))));
+        players.get(fam_name).put("missed 3pt", String.valueOf(missed_3pt + parseInt(players.get(fam_name).get("missed 3pt"))));
+        players.get(fam_name).put("made 3pt", String.valueOf(made_3pt + parseInt(players.get(fam_name).get("made 3pt"))));
+        players.get(fam_name).put("assists", String.valueOf(assists + parseInt(players.get(fam_name).get("assists"))));
+        players.get(fam_name).put("rebounds", String.valueOf(rebounds + parseInt(players.get(fam_name).get("rebounds"))));
+        players.get(fam_name).put("steals", String.valueOf(steals + parseInt(players.get(fam_name).get("steals"))));
+        players.get(fam_name).put("blocks", String.valueOf(blocks + parseInt(players.get(fam_name).get("blocks"))));
+    }
+
+    public static void get_data() throws InterruptedException {
         Scanner input2 = new Scanner(System.in);
         System.out.println("Which player do you want to add to (family name)?");
         String fam_name = capitalize(input2.nextLine());
@@ -153,26 +171,12 @@ public class Demo1 {
                 Thread.sleep(1500);
                 return;
             }
-
-            //parsing turns String into an integer
-            //players are overall hashmap(list of players) the .get is accessing whatever name is in the player list, the .put is putting in the whole database
-            players.get(fam_name).put("games played", String.valueOf(games_played + parseInt(players.get(fam_name).get("games played"))));
-            players.get(fam_name).put("missed ft", String.valueOf(missed_ft + parseInt(players.get(fam_name).get("missed ft"))));
-            players.get(fam_name).put("made ft", String.valueOf(made_ft + parseInt(players.get(fam_name).get("made ft"))));
-            players.get(fam_name).put("missed 2pt", String.valueOf(missed_2pt + parseInt(players.get(fam_name).get("missed 2pt"))));
-            players.get(fam_name).put("made 2pt", String.valueOf(made_2pt + parseInt(players.get(fam_name).get("made 2pt"))));
-            players.get(fam_name).put("missed 3pt", String.valueOf(missed_3pt + parseInt(players.get(fam_name).get("missed 3pt"))));
-            players.get(fam_name).put("made 3pt", String.valueOf(made_3pt + parseInt(players.get(fam_name).get("made 3pt"))));
-            players.get(fam_name).put("assists", String.valueOf(assists + parseInt(players.get(fam_name).get("assists"))));
-            players.get(fam_name).put("rebounds", String.valueOf(rebounds + parseInt(players.get(fam_name).get("rebounds"))));
-            players.get(fam_name).put("steals", String.valueOf(steals + parseInt(players.get(fam_name).get("steals"))));
-            players.get(fam_name).put("blocks", String.valueOf(blocks + parseInt(players.get(fam_name).get("blocks"))));
+            add_data(fam_name, games_played, missed_ft, made_ft, missed_2pt, made_2pt, missed_3pt, made_3pt, assists, rebounds, steals, blocks);
         } else {
             System.err.println("Could not find player");
         }
-        input2.close();
     }
-
+    static ArrayList<String> top_players;
     /**
      *
      * @param points_cutoff
@@ -180,67 +184,24 @@ public class Demo1 {
      * @param rebounds_cutoff
      */
     public static void above_certain(int points_cutoff, int assists_cutoff, int rebounds_cutoff) {
-        int points;
+        float points;
         int assists;
         int rebounds;
-        ArrayList<String> top_players = new ArrayList<>();
+        top_players = new ArrayList<>();
         for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
-            points = (parseInt(players.get(id.getKey()).get("made 2pt")) + 2 * (parseInt(players.get(id.getKey()).get("made 2pt")) + 3 * (parseInt(players.get(id.getKey()).get("made 3pt")))));
+            points = (float) (parseInt(players.get(id.getKey()).get("made ft")) + (2 * (parseInt(players.get(id.getKey()).get("made 2pt"))) + (3 * (parseInt(players.get(id.getKey()).get("made 3pt"))))))/(parseInt(players.get(id.getKey()).get("games played")));
+            System.out.println(points);
             assists = parseInt(players.get(id.getKey()).get("assists"));
             rebounds = parseInt(players.get(id.getKey()).get("rebounds"));
-            if (points >= points_cutoff && assists >= assists_cutoff && rebounds >= rebounds_cutoff) {
+            if ((int) points >= points_cutoff && assists >= assists_cutoff && rebounds >= rebounds_cutoff) {
                 top_players.add(id.getKey());
             }
         }
         //prints the names
-        System.out.println("List of players with " + points_cutoff + "+ points, " + assists_cutoff + "+ assists, and " + rebounds_cutoff + "+ rebounds:");
+        System.out.println("List of players with " + points_cutoff + "+ points, " + assists_cutoff + "+ assists, and " + rebounds_cutoff + "+ rebounds on average per game:");
 
         //----------------------------------------------------------first name----------------------------last name
         top_players.forEach((top_player) -> System.out.println(players.get(top_player).get("name") + " " + top_player));
-    }
-
-    /**
-     * this function is either used for getting the best 3pt shooter or the worst ft shooter
-     *
-     * @param missed
-     * @param made
-     * @param best
-     * @return best 3pt shooter if best is true, otherwise, it will return the worst ft shooter
-     */
-    public static String get_best_worst(String missed, String made, boolean best) {
-        int sum = 0;
-        for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
-            // gets the sum of all the attempts of all the players
-            sum += (parseInt(id.getValue().get(missed) + parseInt(id.getValue().get(made))));
-        }
-        //get the average number of 3pt attempts of all the players
-        float avg_attempts = (float) sum / (players.size());
-
-        float best_percentage = 0;
-        String best_shooter = "";
-        int best_attempts = 0;
-        float worst_percentage = 0;
-        String worst_shooter = "";
-        int worst_attempts = 0;
-        for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
-            int player_attempts = parseInt(id.getValue().get(missed) + parseInt(id.getValue().get(made)));
-            int tot_attempts = parseInt(id.getValue().get("missed 3pt") + parseInt(id.getValue().get(made)));
-            float percentage = (float) (parseInt(players.get(id.getKey()).get(made)) / tot_attempts) * 100;
-            if (best && player_attempts > avg_attempts && percentage > best_percentage) {
-                best_percentage = percentage;
-                best_shooter = id.getKey();
-                best_attempts = tot_attempts;
-            } else if (!best && player_attempts < avg_attempts && percentage < best_percentage) {
-                worst_percentage = percentage;
-                worst_shooter = id.getKey();
-                worst_attempts = tot_attempts;
-            }
-        }
-        if (best) {
-            return "The best 3pt shooter according to our algorithm is " + best_shooter + " with a " + best_percentage + "% made out of " + best_attempts + " attempts";
-        } else {
-            return "The worst ft shooter according to our algorithm is " + worst_shooter + " with a " + worst_percentage + "% made out of " + worst_attempts + " attempts";
-        }
     }
 
     /**
@@ -338,28 +299,37 @@ public class Demo1 {
     public static void main(String[] args) throws Exception {
         boolean loop = true;
         while (loop) {
-            System.out.print("""
-                    Welcome to Basketball player statistics, What would you like to do:
-                    1: Add data
-                    2: View stored data
-                    3: View calculated data
-                    4: Exit\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040
+            System.out.println("""
+                    ______________________________________________________________________
+                        Welcome to Basketball player statistics, What would you like to do:
+                        1: Add data
+                        2: View stored data
+                        3: View calculated data
+                        4: Exit
+                    ______________________________________________________________________
                     """);
 
             //getting input from the terminal
             Scanner input = new Scanner(System.in);
 
             //converting input to integer
-            int response1 = parseInt(input.nextLine());
+            int response1 = 0;
+            if (input.hasNextLine()){
+                response1 = parseInt(input.nextLine());
+            }else{
+                loop = false;
+            }
             if (response1 == 1) {
 
                 //menu
                 System.out.print(
                         """
-                                What data would you like to add:
-                                1: add new player
-                                2: add player data
-                                Press Enter if you wanna go back to menu
+                                _____________________________________________
+                                    What data would you like to add:
+                                    1: add new player
+                                    2: add player data
+                                    Press Enter if you want to go back to menu
+                                _____________________________________________
                                 """);
                 //sub menu is response2, main menu is response1
                 int response2 = parseInt(input.nextLine());
@@ -378,7 +348,7 @@ public class Demo1 {
                 //adding to the arrayList
                 //how are we planning on adding to the arraylist ----> turn all into integers and parse them
                 if (response2 == 2) {
-                    add_data();
+                    get_data();
                 }
             } else if (response1 == 2) {
                 for (String key : players.keySet()) {
@@ -389,26 +359,31 @@ public class Demo1 {
             } else if (response1 == 3) {
                 System.out.print(
                         """
-                                What data would you like to add:
-                                1: Generate best team
-                                2: Generate list of players averaging 25+ points, 5+ assists, 5+ rebounds per game
-                                3: Best defenders
-                                4: Best 3 point shooter
-                                5: Worst free throw shooter
-                                Press Enter if you wanna go back to menu
+                                _______________________________________________________________________________________
+                                    What data would you like to add:
+                                    1: Generate best team
+                                    2: Best defenders
+                                    3: Generate list of players averaging 25+ points, 5+ assists, 5+ rebounds per game
+                                    4: Generate list of players averaging above certain points, assists, rebounds
+                                    Press Enter if you want to go back to menu
+                                _______________________________________________________________________________________
                                 """);
                 int response2 = parseInt(input.nextLine());
                 if (response2 == 1) {
                     best_team();
-                }
-                else if (response2 == 2) {
+                } else if (response2 == 2) {
                     best_defender();
                 } else if (response2 == 3) {
                     above_certain(25, 5, 5);
                 } else if (response2 == 4) {
-                    System.out.println(get_best_worst("missed 3pt", "made 3pt", true));
-                } else if (response2 == 5) {
-                    System.out.println(get_best_worst("missed ft", "made ft", false));
+                    System.out.println("What is the cutoff points per game do you want?");
+                    int points_cutoff = parseInt(input.nextLine());
+                    System.out.println("What is the cutoff assists per game do you want?");
+                    int assist_cutoff = parseInt(input.nextLine());
+                    System.out.println("What is the cutoff rebounds per game do you want?");
+                    int rebounds_cutoff = parseInt(input.nextLine());
+
+                    above_certain(points_cutoff, assist_cutoff, rebounds_cutoff);
                 }
             }
             //if user types in exit, while loop should close
