@@ -10,11 +10,10 @@ package project;
 import java.util.*;
 import static java.lang.Integer.parseInt;
 
-public class DemoGitHub {
+public class Demo1 {
 
-    // null just empty, ex.""
     public static String capitalize(String str) {
-        if(str == null || str.isEmpty()) {
+        if (str == null || str.isEmpty()) {
             return str;
         }
 
@@ -49,14 +48,16 @@ public class DemoGitHub {
     }
 
 
-    public static void above_certain(int points_cutoff, int assists_cutoff, int rebounds_cutoff){
-        int points; int assists; int rebounds;
+    public static void above_certain(int points_cutoff, int assists_cutoff, int rebounds_cutoff) {
+        int points;
+        int assists;
+        int rebounds;
         ArrayList<String> top_players = new ArrayList<>();
         for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
-            points = (parseInt(players.get(id.getKey()).get("made 2pt")) + 2*(parseInt(players.get(id.getKey()).get("made 2pt")) + 3*(parseInt(players.get(id.getKey()).get("made 3pt")))));
+            points = (parseInt(players.get(id.getKey()).get("made 2pt")) + 2 * (parseInt(players.get(id.getKey()).get("made 2pt")) + 3 * (parseInt(players.get(id.getKey()).get("made 3pt")))));
             assists = parseInt(players.get(id.getKey()).get("assists"));
             rebounds = parseInt(players.get(id.getKey()).get("rebounds"));
-            if(points >= points_cutoff && assists >= assists_cutoff && rebounds >= rebounds_cutoff){
+            if (points >= points_cutoff && assists >= assists_cutoff && rebounds >= rebounds_cutoff) {
                 top_players.add(id.getKey());
             }
         }
@@ -68,14 +69,14 @@ public class DemoGitHub {
     }
 
     //best 3pt, worst ft
-    public static String get_best_worst(String missed, String made, boolean best){
+    public static String get_best_worst(String missed, String made, boolean best) {
         int sum = 0;
         for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
             // gets the sum of all the attempts of all the players
             sum += (parseInt(id.getValue().get(missed) + parseInt(id.getValue().get(made))));
         }
         //get the average number of 3pt attempts of all the players
-        float avg_attempts = (float) sum/(players.size());
+        float avg_attempts = (float) sum / (players.size());
 
         float best_percentage = 0;
         String best_shooter = "";
@@ -86,25 +87,25 @@ public class DemoGitHub {
         for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
             int player_attempts = parseInt(id.getValue().get(missed) + parseInt(id.getValue().get(made)));
             int tot_attempts = parseInt(id.getValue().get("missed 3pt") + parseInt(id.getValue().get(made)));
-            float percentage = (float) (parseInt(players.get(id.getKey()).get(made))/tot_attempts) * 100;
-            if (best && player_attempts > avg_attempts && percentage > best_percentage){
+            float percentage = (float) (parseInt(players.get(id.getKey()).get(made)) / tot_attempts) * 100;
+            if (best && player_attempts > avg_attempts && percentage > best_percentage) {
                 best_percentage = percentage;
                 best_shooter = id.getKey();
                 best_attempts = tot_attempts;
-            }else if (!best && player_attempts < avg_attempts && percentage < best_percentage){
+            } else if (!best && player_attempts < avg_attempts && percentage < best_percentage) {
                 worst_percentage = percentage;
                 worst_shooter = id.getKey();
                 worst_attempts = tot_attempts;
             }
         }
-        if (best){
+        if (best) {
             return "The best 3pt shooter according to our algorithm is " + best_shooter + " with a " + best_percentage + "% made out of " + best_attempts + " attempts";
-        }else{
+        } else {
             return "The worst ft shooter according to our algorithm is " + worst_shooter + " with a " + worst_percentage + "% made out of " + worst_attempts + " attempts";
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         boolean loop = true;
         while (loop) {
             System.out.print("""
@@ -158,80 +159,80 @@ public class DemoGitHub {
                             break;
                         }
                     }
-                    if (found){
+                    if (found) {
                         System.out.println("How many games has the player played?");
                         int games_played = parseInt(input.nextLine());
-                        if(games_played < 0){
+                        if (games_played < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many free throws were missed?");
                         int missed_ft = parseInt(input.nextLine());
-                        if(missed_ft < 0){
+                        if (missed_ft < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many free throws were made?");
                         int made_ft = parseInt(input.nextLine());
-                        if(made_ft < 0){
+                        if (made_ft < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many missed 2 pointers?");
                         int missed_2pt = parseInt(input.nextLine());
-                        if(missed_2pt < 0){
+                        if (missed_2pt < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many made 2 pointers?");
                         int made_2pt = parseInt(input.nextLine());
-                        if(made_2pt < 0){
+                        if (made_2pt < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many missed 3 pointers?");
                         int missed_3pt = parseInt(input.nextLine());
-                        if(missed_3pt < 0){
+                        if (missed_3pt < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many made 3 pointers?");
                         int made_3pt = parseInt(input.nextLine());
-                        if(made_3pt < 0){
+                        if (made_3pt < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many assists?");
                         int assists = parseInt(input.nextLine());
-                        if(assists < 0){
+                        if (assists < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many rebounds?");
                         int rebounds = parseInt(input.nextLine());
-                        if(rebounds < 0){
+                        if (rebounds < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many steals?");
                         int steals = parseInt(input.nextLine());
-                        if(steals < 0){
+                        if (steals < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
                         }
                         System.out.println("How many blocks?");
                         int blocks = parseInt(input.nextLine());
-                        if(blocks < 0){
+                        if (blocks < 0) {
                             System.err.println("Only positive integers are accepted");
                             Thread.sleep(1500);
                             continue;
@@ -250,21 +251,17 @@ public class DemoGitHub {
                         players.get(fam_name).put("rebounds", String.valueOf(rebounds + parseInt(players.get(fam_name).get("rebounds"))));
                         players.get(fam_name).put("steals", String.valueOf(steals + parseInt(players.get(fam_name).get("steals"))));
                         players.get(fam_name).put("blocks", String.valueOf(blocks + parseInt(players.get(fam_name).get("blocks"))));
-                    }
-
-                    else {
+                    } else {
                         System.err.println("Could not find player");
                     }
                 }
-            }
-            else if (response1 == 2) {
-                for (String key: players.keySet()){
-                    System.out.println(key+ " = " + players.get(key));
+            } else if (response1 == 2) {
+                for (String key : players.keySet()) {
+                    System.out.println(key + " = " + players.get(key));
                     Thread.sleep(2000);
                 }
                 //System.out.println(players);
-            }
-            else if (response1 == 3) {
+            } else if (response1 == 3) {
                 System.out.print(
                         """
                                 What data would you like to add:
@@ -278,12 +275,10 @@ public class DemoGitHub {
                 int response2 = parseInt(input.nextLine());
 
                 //**Generate best team**(top 5 players, best players are defined by who has the most made ft, made 2pt, made 3pt)
-                if(response2 == 1) {
+                if (response2 == 1) {
 
                     //players.keySet is making a key set of all the players we have, then putting that into a list called names
                     List<String> names = new ArrayList<>(players.keySet());
-
-
 
                     //creating two array lists
                     List<String> best_team = new ArrayList<>();
@@ -291,8 +286,6 @@ public class DemoGitHub {
 
                     //try and catch statement so that when there is less than 5 players still works
                     try {
-
-
                         //doing this 5 times to get the top 5 players
                         for (int j = 0; j < 5; j++) {
 
@@ -326,15 +319,16 @@ public class DemoGitHub {
                             //8 players removes 1 then 7 players removes one....etc
                             names.remove(best_shooter);
                         }
-                    }catch(ArrayIndexOutOfBoundsException e){
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.err.println("You should have at least 5 players added to generate the best team");
+                    }
                     System.out.println("Best Team" + best_team);
                     System.out.println("Best Team Score" + best_team_score);
                 }
-
-                //**Best defenders**(largest number of steals and blocks(summed up))
-                //sub menu is response 2 main menu is response is 1
-                if(response2 == 2){
-
+                    //**Best defenders**(largest number of steals and blocks(summed up))
+                    //sub menu is response 2 main menu is response is 1
+                if (response2 == 2) {
+                    List<String> names = new ArrayList<>(players.keySet());
                     //set to zero because it gives first player
                     int best_defence = 0;
 
@@ -362,15 +356,12 @@ public class DemoGitHub {
                     System.out.println("Best defender: " + best_defender);
                     System.out.println("Defender score: " + best_defence);
 
-                }
-                else if(response2 == 3) {
+                } else if (response2 == 3) {
 
-                    above_certain(25,5,5);
-                }
-                else if(response2 == 4) {
+                    above_certain(25, 5, 5);
+                } else if (response2 == 4) {
                     System.out.println(get_best_worst("missed 3pt", "made 3pt", true));
-                }
-                else if(response2 == 5) {
+                } else if (response2 == 5) {
                     System.out.println(get_best_worst("missed ft", "made ft", false));
                 }
             }
