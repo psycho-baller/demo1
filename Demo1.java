@@ -10,7 +10,7 @@ package project;
 import java.util.*;
 import static java.lang.Integer.parseInt;
 
-public class DemoGitHub {
+public class Demo1 {
 
     // null just empty, ex.""
     public static String capitalize(String str) {
@@ -23,10 +23,10 @@ public class DemoGitHub {
 
     //just a hashmap where the key is a string and the value is another hashmap
     //first hashmap = players(name, player (hashmap(string,string))
-    static HashMap<String, HashMap<String, String>> players = new HashMap<String, HashMap<String, String>>();
+    static HashMap<String, HashMap<String, String>> players = new HashMap<>();
 
     public static void addPlayer(String name, String fam_name, String pos, String team) {
-        HashMap<String, String> player = new HashMap<String, String>();
+        HashMap<String, String> player = new HashMap<>();
         player.put("Name", capitalize(name));
         player.put("fam name", capitalize(fam_name));
         player.put("position", pos.toUpperCase());
@@ -50,10 +50,8 @@ public class DemoGitHub {
 
 
     public static void above_certain(int points_cutoff, int assists_cutoff, int rebounds_cutoff){
-        int points = 0;
-        int assists = 0;
-        int rebounds = 0;
-        ArrayList<String> top_players = new ArrayList<String>();
+        int points; int assists; int rebounds;
+        ArrayList<String> top_players = new ArrayList<>();
         for (Map.Entry<String, HashMap<String, String>> id : players.entrySet()) {
             points = (parseInt(players.get(id.getKey()).get("made 2pt")) + 2*(parseInt(players.get(id.getKey()).get("made 2pt")) + 3*(parseInt(players.get(id.getKey()).get("made 3pt")))));
             assists = parseInt(players.get(id.getKey()).get("assists"));
@@ -64,7 +62,7 @@ public class DemoGitHub {
         }
         //prints the names
         System.out.println("List of players with " + points_cutoff + "+ points, " + assists_cutoff + "+ assists, and " + rebounds_cutoff + "+ rebounds:");
-        
+
         //                                                              first name                          last name
         top_players.forEach((top_player) -> System.out.println(players.get(top_player).get("name") + " " + top_player));
     }
@@ -104,7 +102,7 @@ public class DemoGitHub {
             return "The worst ft shooter according to our algorithm is " + worst_shooter + " with a " + worst_percentage + "% made out of " + worst_attempts + " attempts";
         }
     }
-    
+
     public static void main(String[] args) throws InterruptedException {
         boolean loop = true;
         while (loop) {
@@ -159,7 +157,7 @@ public class DemoGitHub {
                             break;
                         }
                     }
-                     if (found){
+                    if (found){
                         System.out.println("How many games has the player played?");
                         int games_played = parseInt(input.nextLine());
                         if(games_played < 0){
@@ -257,9 +255,6 @@ public class DemoGitHub {
                         System.err.println("Could not find player");
                     }
                 }
-                if (response2 == 3){
-                    continue;
-                }
             }
             else if (response1 == 2) {
                 for (String key: players.keySet()){
@@ -285,13 +280,13 @@ public class DemoGitHub {
                 if(response2 == 1) {
 
                     //players.keyset is making a key set of all the players we have, then putting that into a list called names
-                    List<String> names = new ArrayList<String>(players.keySet());
+                    List<String> names = new ArrayList<>(players.keySet());
                     //setting initional value and checking if its better then the previous one
 
                     //set to zero because it gives first player
 
-                    List<String> best_team = new ArrayList<String>();
-                    List<Integer> best_team_score = new ArrayList<Integer>();
+                    List<String> best_team = new ArrayList<>();
+                    List<Integer> best_team_score = new ArrayList<>();
 
                     //doing this 5 times to get the top 5 players
                     for (int j = 0; j < 5; j++) {
@@ -300,27 +295,22 @@ public class DemoGitHub {
 
                         //going through all the names that are down(in the hashmap)
                         // this is getting the best player out of the remaining players
-                        for (int i = 0; i < names.size(); i++) {
+                        for (String name : names) {
                             //System.out.println(players.get(names.get(i)).get("steals"));
-                            int current_ft = Integer.parseInt(players.get(names.get(i)).get("made ft"));
-                            int current_2pt = Integer.parseInt(players.get(names.get(i)).get("made 2pt"));
-                            int current_3pt = Integer.parseInt(players.get(names.get(i)).get("made 3pt"));
+                            int current_ft = Integer.parseInt(players.get(name).get("made ft"));
+                            int current_2pt = Integer.parseInt(players.get(name).get("made 2pt"));
+                            int current_3pt = Integer.parseInt(players.get(name).get("made 3pt"));
                             int current_score = current_ft + current_2pt + current_3pt;
-
-                            //remebering the name of the person
-                            String current_player = names.get(i);
 
                             //must check current_defence first
                             if (current_score > best_scores) {
-                                best_shooter = current_player;
+                                best_shooter = name;
                                 best_scores = current_score;
                             }
                         }
-                        //System.out.println("Best shooter: " + best_shooter);
-                        //System.out.println("Baskets made: " + best_scores);
                         best_team.add(best_shooter);
                         best_team_score.add(best_scores);
-                        
+
                         //only happens in the j loop,
                         //this doesn't touch the hashmap
                         //8 players removes 1 then 7 players removes one....etc
@@ -332,9 +322,9 @@ public class DemoGitHub {
 
                 //best defenders(highest number of steals and blocks(summed up) top 5
                 //sub menu is response 2 main menu is response is 1
-                if(response2 == 3){
+                if(response2 == 2){
                     //players.keyset is making a key set of all the players we have, then putting that into a list called names
-                    List<String> names = new ArrayList<String>(players.keySet());
+                    List<String> names = new ArrayList<>(players.keySet());
                     //setting initional value and checking if its better then the previous one
                     int best_defence = 0;
                     //set to zero because it gives first player
@@ -342,19 +332,15 @@ public class DemoGitHub {
 
 
                     //going through all the names that are down(in the hashmap)
-                    for (int i = 0; i<names.size(); i ++){
+                    for (String name : names) {
                         //System.out.println(players.get(names.get(i)).get("steals"));
-                        int current_steals = Integer.parseInt(players.get(names.get(i)).get("steals"));
-                        int current_blocks = Integer.parseInt(players.get(names.get(i)).get("blocks"));
-
-
-                        //remebering the name of the person
-                        String current_player = names.get(i);
+                        int current_steals = Integer.parseInt(players.get(name).get("steals"));
+                        int current_blocks = Integer.parseInt(players.get(name).get("blocks"));
 
                         int current_defence = current_steals + current_blocks;
                         //must check current_defence first
-                        if (current_defence > best_defence){
-                            best_defender = current_player;
+                        if (current_defence > best_defence) {
+                            best_defender = name;
                             best_defence = current_defence;
 
                         }
@@ -365,15 +351,15 @@ public class DemoGitHub {
                     System.out.println("Defender score: " + best_defence);
 
                 }
-                    
+                else if(response2 == 3) {
+
+                    above_certain(25,5,5);
+                }
                 else if(response2 == 4) {
-                    get_best_worst("missed 3pt", "made 3pt", true);
+                    System.out.println(get_best_worst("missed 3pt", "made 3pt", true));
                 }
                 else if(response2 == 5) {
-                    get_best_worst("missed ft", "made ft", false);
-                }
-                else if (response2 == 6){
-                    continue;
+                    System.out.println(get_best_worst("missed ft", "made ft", false));
                 }
             }
             //if user types in exit, while loop should close
