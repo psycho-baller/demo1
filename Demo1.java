@@ -288,33 +288,37 @@ public class Demo1 {
                     List<String> best_team = new ArrayList<>();
                     List<Integer> best_team_score = new ArrayList<>();
 
-                    //doing this 5 times to get the top 5 players
-                    for (int j = 0; j < 5; j++) {
-                        int best_scores = 0;
-                        String best_shooter = names.get(0);
+                    try{
+                        //doing this 5 times to get the top 5 players
+                        for (int j = 0; j < 5; j++) {
+                            int best_scores = 0;
+                            String best_shooter = names.get(0);
 
-                        //going through all the names that are down(in the hashmap)
-                        // this is getting the best player out of the remaining players
-                        for (String name : names) {
-                            //System.out.println(players.get(names.get(i)).get("steals"));
-                            int current_ft = Integer.parseInt(players.get(name).get("made ft"));
-                            int current_2pt = Integer.parseInt(players.get(name).get("made 2pt"));
-                            int current_3pt = Integer.parseInt(players.get(name).get("made 3pt"));
-                            int current_score = current_ft + current_2pt + current_3pt;
+                            //going through all the names that are down(in the hashmap)
+                            // this is getting the best player out of the remaining players
+                            for (String name : names) {
+                                //System.out.println(players.get(names.get(i)).get("steals"));
+                                int current_ft = Integer.parseInt(players.get(name).get("made ft"));
+                                int current_2pt = Integer.parseInt(players.get(name).get("made 2pt"));
+                                int current_3pt = Integer.parseInt(players.get(name).get("made 3pt"));
+                                int current_score = current_ft + current_2pt + current_3pt;
 
-                            //must check current_defence first
-                            if (current_score > best_scores) {
-                                best_shooter = name;
-                                best_scores = current_score;
+                                //must check current_defence first
+                                if (current_score > best_scores) {
+                                    best_shooter = name;
+                                    best_scores = current_score;
+                                }
                             }
-                        }
-                        best_team.add(best_shooter);
-                        best_team_score.add(best_scores);
+                            best_team.add(best_shooter);
+                            best_team_score.add(best_scores);
 
-                        //only happens in the j loop,
-                        //this doesn't touch the hashmap
-                        //8 players removes 1 then 7 players removes one....etc
-                        names.remove(best_shooter);
+                            //only happens in the j loop,
+                            //this doesn't touch the hashmap
+                            //8 players removes 1 then 7 players removes one....etc
+                            names.remove(best_shooter);
+                        }
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.err.println("You should have at least 5 players added to generate the best team");
                     }
                     System.out.println("Best Team" + best_team);
                     System.out.println("Best Team Score" + best_team_score);
@@ -352,7 +356,6 @@ public class Demo1 {
 
                 }
                 else if(response2 == 3) {
-
                     above_certain(25,5,5);
                 }
                 else if(response2 == 4) {
