@@ -32,6 +32,7 @@ public class DemoGitHub {
         player.put("fam name", capitalize(fam_name));
         player.put("position", pos.toUpperCase());
         player.put("team", capitalize(team));
+        //the 0 does not matter can be anything, getting changed anyway
         player.put("missed ft", "0");
         player.put("made ft", "0");
         player.put("missed 2pt", "0");
@@ -42,7 +43,7 @@ public class DemoGitHub {
         player.put("rebounds", "0");
         player.put("steals", "0");
         player.put("blocks", "0");
-        //the 0 does not matter can be anything, getting changed anyway
+
 
         //adding it to the overall hashmap which is called player, we are going to access using fam_name
         players.put(fam_name, player);
@@ -91,7 +92,7 @@ public class DemoGitHub {
             int response1 = parseInt(input.nextLine());
             if (response1 == 1) {
 
-                //menu
+                //printing the menu
                 System.out.print(
                         """
                                 What data would you like to add:
@@ -113,11 +114,12 @@ public class DemoGitHub {
 
                     addPlayer(name, fam_name, pos, team);
                 }
-                //adding to the arrayList
-                //how are we planning on adding to the arraylist ----> turn all into integers and parse them
+
+                //adding to the arrayList by turning into integers and parsing them
                 if (response2 == 2) {
                     System.out.println("Which player do you want to add to (family name)?");
                     String fam_name = capitalize(input.nextLine());
+
 
                     //goes through the hashmap, and if it finds the name it breaks
                     boolean found = false;
@@ -167,20 +169,21 @@ public class DemoGitHub {
                         System.err.println("Could not find player");
                     }
                 }
+
                 if (response2 == 3){
                     continue;
                 }
             }
+
             else if (response1 == 2) {
                 for (String key: players.keySet()){
                     System.out.println(key+ " = " + players.get(key));
                 }
-                //System.out.println(players);
+
             }
+
             else if (response1 == 3) {
                 //TODO: add calculated data option menu
-
-
                 System.out.print(
                         """
                                 What data would you like to add:
@@ -191,41 +194,42 @@ public class DemoGitHub {
                                 """);
                 int response2 = parseInt(input.nextLine());
 
-                //this is generate best team(best offensive player, best defensive player)
+                //**Generate best team**(best offensive player and best defensive player is what defines what the best team is)
                 if(response2 == 1) {
 
-                    //players.keyset is making a key set of all the players we have, then putting that into a list called names
+                    //players.keySet is making a key set of all the players we have, then putting that into a list called names
                     List<String> names = new ArrayList<String>(players.keySet());
-                    //setting initional value and checking if its better then the previous one
-
-                    //set to zero because it gives first player
 
 
+
+                    //creating two array lists
                     List<String> best_team = new ArrayList<String>();
                     List<Integer> best_team_score = new ArrayList<Integer>();
 
                     //doing this 5 times to get the top 5 players
                     for (int j = 0; j < 5; j++) {
 
+                        //set to zero because it gives first player
+                        //setting initial value and checking if it's better than the previous one
                         int best_scores = 0;
                         String best_shooter = names.get(0);
 
 
-                        //going through all the names that are down(in the hashmap)
+                        // going through all the names that are in the hashmap
                         // this is getting the best player out of the remaining players
                         for (int i = 0; i < names.size(); i++) {
-                            //System.out.println(players.get(names.get(i)).get("steals"));
+
                             int current_ft = Integer.parseInt(players.get(names.get(i)).get("made ft"));
                             int current_2pt = Integer.parseInt(players.get(names.get(i)).get("made 2pt"));
                             int current_3pt = Integer.parseInt(players.get(names.get(i)).get("made 3pt"));
                             int current_score = current_ft + current_2pt + current_3pt;
 
 
-                            //remebering the name of the person
+                            //remembering the name of the person
                             String current_player = names.get(i);
 
 
-                            //must check current_defence first
+                            //must check current_score first
                             if (current_score > best_scores) {
                                 best_shooter = current_player;
                                 best_scores = current_score;
@@ -234,15 +238,14 @@ public class DemoGitHub {
 
 
                         }
-                        //System.out.println("Best shooter: " + best_shooter);
-                        //System.out.println("Baskets made: " + best_scores);
                         best_team.add(best_shooter);
                         best_team_score.add(best_scores);
+
+
                         //only happens in the j loop,
                         //this doesn't touch the hashmap
                         //8 players removes 1 then 7 players removes one....etc
                         names.remove(best_shooter);
-
 
 
                     }
@@ -250,15 +253,16 @@ public class DemoGitHub {
                     System.out.println("Best Team Score" + best_team_score);
                 }
 
-                //best defenders(highest number of steals and blocks(summed up) top 5
+                //**Best defenders**(largest number of steals and blocks(summed up)
                 //sub menu is response 2 main menu is response is 1
                 if(response2 == 3){
 
 
 
-                    //players.keyset is making a key set of all the players we have, then putting that into a list called names
+                    //players.keySet is making a key set of all the players we have, then putting that into a list called names
                     List<String> names = new ArrayList<String>(players.keySet());
-                    //setting initional value and checking if its better then the previous one
+
+                    //setting initial value and checking if it's better than the previous one
                     int best_defence = 0;
                     //set to zero because it gives first player
                     String best_defender = names.get(0);
@@ -271,7 +275,7 @@ public class DemoGitHub {
                         int current_blocks = Integer.parseInt(players.get(names.get(i)).get("blocks"));
 
 
-                        //remebering the name of the person
+                        //remembering the name of the person
                         String current_player = names.get(i);
 
                         int current_defence = current_steals + current_blocks;
@@ -282,28 +286,18 @@ public class DemoGitHub {
 
                         }
 
-
                     }
                     System.out.println("Best defender: " + best_defender);
                     System.out.println("Defender score: " + best_defence);
 
                 }
 
-                //this is what needs to be in the calculated data option menu
-                //Output Data:
-                //1) generate the best team
-                //3) 25+pts, 5+ assists, 5+rebounds
-                //4) Best defenders
-
-
 
                 //**For Junit testing**
                 //no testing for inputs, just the functions
 
-                //**For the 2 remaining functions**
-                //view stored data just needs to be printed out
-                //view calculated data need to create functions
             }
+
             //if user types in exit, while loop should close
             //for exit
             else if (response1 == 4) {
